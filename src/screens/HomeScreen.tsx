@@ -15,8 +15,9 @@ import {
   MapPinIcon
 } from 'react-native-heroicons/solid'
 import { themeColors } from '../theme'
-import { categories } from '../constants/data'
-
+import { categories, coffeeItems } from '../constants/data'
+import Carousel from 'react-native-snap-carousel'
+import { CoffeCard } from '../components/CoffeCard'
 // export interface HomeScreenProps {
 //   item: {
 //     id: number;
@@ -25,7 +26,6 @@ import { categories } from '../constants/data'
 // }
 
 export default function HomeScreen() {
-
   const [activeCategory, setActiveCategory] = React.useState(1)
   return (
     <View className="flex-1 relative bg-white">
@@ -67,29 +67,50 @@ export default function HomeScreen() {
           </View>
         </View>
         {/* categories */}
-        <View className='px-5 mt-6'>
-
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={categories}
-          keyExtractor={(item) => item.id}
-          className='overflow-visible'
-          renderItem={({ item }) => {
-            let isActive = item.id == activeCategory
-            let activeTextColor = isActive ? 'text-white' : 'text-gray-700'
-            return (
-              <TouchableOpacity
-               onPress={() => setActiveCategory(item.id)}
-              style={{backgroundColor: isActive ? themeColors.bgLight : 'rgba( 0,0,0, 0.07)'}}
-              className='p-4 px-6 rounded-full mr-2 shadow'
-              >
-                <Text className={'font-semibold' + activeTextColor}>{item.title}</Text>
-              </TouchableOpacity>
-            )
-          }}
+        <View className="px-5 mt-6">
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={categories}
+            keyExtractor={item => item.id}
+            className="overflow-visible"
+            renderItem={({ item }) => {
+              let isActive = item.id == activeCategory
+              let activeTextColor = isActive ? 'text-white' : 'text-gray-700'
+              return (
+                <TouchableOpacity
+                  onPress={() => setActiveCategory(item.id)}
+                  style={{
+                    backgroundColor: isActive
+                      ? themeColors.bgLight
+                      : 'rgba( 0,0,0, 0.07)'
+                  }}
+                  className="p-4 px-6 rounded-full mr-2 shadow"
+                >
+                  <Text className={'font-semibold' + activeTextColor}>
+                    {item.title}
+                  </Text>
+                </TouchableOpacity>
+              )
+            }}
           />
-          </View>
+        </View>
+
+        {/* cards  */}
+        <View className="mt-16 py-2">
+          <Carousel
+            containerCustomStyle={{ overflow: 'visible' }}
+            data={coffeeItems}
+            firstItem={1}
+            inactiveSlideOpacity={0.75}
+            inactiveSlideScale={0.77}
+            sliderWidth={400}
+            itemWidth={260}
+            slideStyle={{ display: 'flex', alignItems: 'center' }}
+            renderItem={({ item }) => <CoffeCard item={item} />}
+            loop
+          />
+        </View>
       </SafeAreaView>
     </View>
   )
