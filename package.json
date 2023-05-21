@@ -14,7 +14,8 @@
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.71.8",
-    "react-native-heroicons": "^3.2.0"
+    "react-native-heroicons": "^3.2.0",
+    "react-native-snap-carousel": "^3.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
