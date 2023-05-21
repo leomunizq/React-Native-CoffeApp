@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+  FlatList,
   Image,
   SafeAreaView,
   Text,
@@ -14,8 +15,18 @@ import {
   MapPinIcon
 } from 'react-native-heroicons/solid'
 import { themeColors } from '../theme'
+import { categories } from '../constants/data'
+
+// export interface HomeScreenProps {
+//   item: {
+//     id: number;
+//     title: string;
+// }
+// }
 
 export default function HomeScreen() {
+
+  const [activeCategory, setActiveCategory] = React.useState(1)
   return (
     <View className="flex-1 relative bg-white">
       <StatusBar style="dark" />
@@ -55,7 +66,30 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
         </View>
-        
+        {/* categories */}
+        <View className='px-5 mt-6'>
+
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={categories}
+          keyExtractor={(item) => item.id}
+          className='overflow-visible'
+          renderItem={({ item }) => {
+            let isActive = item.id == activeCategory
+            let activeTextColor = isActive ? 'text-white' : 'text-gray-700'
+            return (
+              <TouchableOpacity
+               onPress={() => setActiveCategory(item.id)}
+              style={{backgroundColor: isActive ? themeColors.bgLight : 'rgba( 0,0,0, 0.07)'}}
+              className='p-4 px-6 rounded-full mr-2 shadow'
+              >
+                <Text className={'font-semibold' + activeTextColor}>{item.title}</Text>
+              </TouchableOpacity>
+            )
+          }}
+          />
+          </View>
       </SafeAreaView>
     </View>
   )
